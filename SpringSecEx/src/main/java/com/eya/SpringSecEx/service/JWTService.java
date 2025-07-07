@@ -58,8 +58,10 @@ public class JWTService {
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("role", ((UserPrincipal) userDetails).getUser().getRoles());
         return generateToken(userDetails.getUsername(), claims);
     }
+
 
     public JwtResponse createJwtToken(JwtRequest jwtRequest) throws Exception {
         String userName = jwtRequest.getUserName();
@@ -105,7 +107,7 @@ public class JWTService {
         return claimsResolver.apply(claims);
     }
 
-    private Claims extractAllClaims(String token) {
+    public Claims extractAllClaims(String token) {
         return Jwts.parser()
                 .verifyWith(getSigningKey())
                 .build()

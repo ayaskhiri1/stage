@@ -1,6 +1,6 @@
 <div class="container mt-5">
   <h2>Sign Up</h2>
-  
+
   <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
     <div class="mb-3">
       <label>Username</label>
@@ -19,7 +19,7 @@
 
     <div class="mb-3">
       <label>Role</label>
-      <select class="form-control" formControlName="role">
+      <select class="form-control" formControlName="roles">
         <option value="ROLE_USER">Student</option>
         <option value="ROLE_ADMIN">Admin</option>
       </select>

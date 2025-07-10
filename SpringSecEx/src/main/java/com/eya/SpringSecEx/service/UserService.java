@@ -31,9 +31,15 @@ public class UserService {
         if (userRepo.findByUsername(user.getUsername()) != null) {
             throw new RuntimeException("Username already exists!");
         }
+
+        if (user.getRoles() == null || user.getRoles().isEmpty()) {
+            user.setRoles("ROLE_USER");
+        }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(user);
     }
+
 
     public String verify(Users user) {
         try {

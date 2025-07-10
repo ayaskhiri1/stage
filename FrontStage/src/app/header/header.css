@@ -1,0 +1,18 @@
+.custom-navbar {
+  height: 80px; /* agrandir la navbar */
+}
+
+.custom-brand {
+  font-size: 1.5rem; /* agrandir le texte de la marque */
+  font-weight: 500;
+}
+
+.custom-nav .nav-link {
+  font-size: 1.2rem; /* agrandir les liens Home, Courses, Contact */
+  margin: 0 10px; /* espacement entre les liens */
+}
+
+.custom-btn {
+  font-size: 1rem; /* agrandir les boutons */
+  padding: 6px 12px;
+}

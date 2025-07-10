@@ -1,71 +1,80 @@
-import { Injectable, inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
-import { of } from 'rxjs';
-
-export const authGuard: CanActivateFn = () => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
-
-  if (authService.isLoggedIn()) {
-    return true;
-  }
-
-  router.navigate(['/login']);
-  return false;
-};
-
-export const adminGuard: CanActivateFn = () => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
-
-  if (authService.isLoggedIn() && authService.isAdmin()) {
-    return true;
-  }
-
-  router.navigate(['/forbidden']);
-  return false;
-};
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { tap, catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private apiUrl = 'http://localhost:8080/api';
+
+  constructor(private http: HttpClient, private router: Router) { }
+
+  signup(data: any) {
+    return this.http.post(`${this.apiUrl}/register`, data);
+  }
+
+  login(username: string, password: string): Observable<boolean> {
+    const body = { userName: username, userPassword: password }; // correspond à JwtRequest
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    return this.http.post<any>(`${this.apiUrl}/authenticate`, body, { headers }).pipe(
+      tap((response) => {
+        localStorage.setItem('token', response.jwtToken);     // sauvegarde le token
+        localStorage.setItem('user', JSON.stringify(response.user)); // sauvegarde les infos user
+      }),
+      map(() => true),
+      catchError((error) => {
+        console.error('Login failed:', error);
+        return of(false);
+      })
+    );
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.router.navigate(['/login']);
+  }
+
   isLoggedIn(): boolean {
-    return localStorage.getItem('currentUser') !== null;
+    return !!localStorage.getItem('token');
   }
 
   isAdmin(): boolean {
-    const userData = localStorage.getItem('currentUser');
-    if (!userData) return false;
+    const token = localStorage.getItem('token');
+    if (!token) return false;
+
     try {
-      const user = JSON.parse(userData);
-      return user.role === 'admin';
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const role = payload.role || payload.roles || payload.authorities;
+      if (Array.isArray(role)) {
+        return role.includes('ROLE_ADMIN');
+      } else if (typeof role === 'string') {
+        return role.includes('ROLE_ADMIN');
+      }
+      return false;
     } catch {
       return false;
     }
   }
 
- login(username: string, password: string) {
-  let isAuthenticated = false;
-  let role = '';
-
-  if (username === 'admin' && password === 'admin123') {
-    isAuthenticated = true;
-    role = 'admin';
-  } else if (username === 'student' && password === 'student123') {
-    isAuthenticated = true;
-    role = 'user';
+  getToken(): string | null {
+    return localStorage.getItem('token');
   }
 
-  if (isAuthenticated) {
-    localStorage.setItem('currentUser', JSON.stringify({ username, role }));
-  }
+  getRole(): string | null {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
 
-  return of(isAuthenticated);
-}
-
-
-  logout() {
-    localStorage.removeItem('currentUser');
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const role = payload.role || payload.roles || payload.authorities;
+      return Array.isArray(role) ? role.join(',') : role;
+    } catch {
+      return null;
+    }
   }
 }

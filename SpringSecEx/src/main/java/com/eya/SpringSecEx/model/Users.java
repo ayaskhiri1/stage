@@ -20,6 +20,9 @@ public class Users {
     @Column(nullable = false)
     private String roles;
 
+    @Column(nullable = false, unique = true)
+    private String email;
+
     public Users() {}
 
     public Users(String username, String password, String roles) {
@@ -39,6 +42,9 @@ public class Users {
 
     public String getRoles() { return roles; }
     public void setRoles(String roles) { this.roles = roles; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
     @Override
     public String toString() {

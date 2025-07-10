@@ -14,9 +14,15 @@ import { User } from './user/user';
 import { Home } from './home/home';
 import { Login } from './login/login';
 import { Forbidden } from './forbidden/forbidden';
+import { Signup } from './signup/signup';
+import { Courses } from './courses/courses';
 
 import { routes } from './app.routes';
 import { AuthService } from './_auth/auth.service';
+
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './_auth/auth.interceptor';
+
 
 @Component({
   standalone: true,
@@ -34,22 +40,19 @@ export class App {
 
 @NgModule({
   declarations: [
-    
+   
   ],
   imports: [
     BrowserModule,
-    Header,
-    Admin,
-    App,
-    User,
-    Home,
-    Login,
-    Forbidden,
-    FormsModule,
+    App,  
+    RouterModule.forRoot(routes),
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    FormsModule,
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [App]
 })
 export class AppModule { }

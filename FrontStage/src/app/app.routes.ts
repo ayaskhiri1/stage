@@ -23,5 +23,6 @@ export const routes: Routes = [
   { path: 'contact', component: Contact },
   { path: 'forbidden', component: Forbidden },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
+
   { path: '**', redirectTo: '/home' }  // optionnel : route 404
 ];

@@ -8,6 +8,7 @@ import { Signup } from './signup/signup';
 import { Login } from './login/login';
 import { Contact } from './contact/contact';
 import { Forbidden } from './forbidden/forbidden';
+import { About } from './about/about';
 
 import { authGuard } from './_auth/auth.guard';
 import { adminGuard } from './_auth/admin.guard';
@@ -21,6 +22,7 @@ export const routes: Routes = [
   { path: 'signup', component: Signup, canActivate: [GuestGuard] },
   { path: 'login', component: Login, canActivate: [GuestGuard] },
   { path: 'contact', component: Contact },
+  { path: 'about', component: About },
   { path: 'forbidden', component: Forbidden },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 

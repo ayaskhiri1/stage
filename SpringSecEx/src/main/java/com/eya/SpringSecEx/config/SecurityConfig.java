@@ -44,10 +44,15 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/register", "/api/login", "/api/authenticate").permitAll()
+                        // Routes publiques
+                        .requestMatchers("/api/register", "/api/login", "/api/authenticate", "/api/contact").permitAll()
+
+                        // Routes protégées par rôle
                         .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/formateur/**").hasAuthority("ROLE_FORMATEUR")
                         .requestMatchers("/etudiant/**").hasAuthority("ROLE_ETUDIANT")
+
+                        // Toute autre requête doit être authentifiée
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -85,7 +90,6 @@ public class SecurityConfig {
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
-
         return source;
     }
 }

@@ -16,6 +16,7 @@ public class JwtController {
 
     @PostMapping("/authenticate")
     public JwtResponse createJwtToken(@RequestBody JwtRequest jwtRequest) throws Exception {
+        System.out.println("Login request: " + jwtRequest.getUsername() + " / " + jwtRequest.getUserPassword());
         return jwtService.createJwtToken(jwtRequest);
     }
 }

@@ -64,29 +64,36 @@ public class JWTService {
 
 
     public JwtResponse createJwtToken(JwtRequest jwtRequest) throws Exception {
-        String userName = jwtRequest.getUserName();
+        String identifier   = jwtRequest.getIdentifier();
         String userPassword = jwtRequest.getUserPassword();
 
-        authenticate(userName, userPassword);
+        authenticate(identifier, userPassword);
 
-        final UserDetails userDetails = loadUserByUsername(userName);
+        final UserDetails userDetails = loadUserByUsername(identifier);
         String newGeneratedToken = generateToken(userDetails);
 
-        Users user = userRepo.findByUsername(userName);
+        Users user = userRepo.findByUsername(identifier);
         return new JwtResponse(user, newGeneratedToken);
     }
 
+    private Users findUser(String identifier) {
+        return userRepo.findByIdentifier(identifier)
+                .orElseThrow(() ->
+                        new UsernameNotFoundException(
+                                "User not found: " + identifier));
+    }
+
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        Users user = userRepo.findByUsername(userName);
+        Users user = findUser(userName);
         if (user == null) {
-            throw new UsernameNotFoundException("User not found: " + userName);
+            throw new UsernameNotFoundException("User not found. " );
         }
         return new UserPrincipal(user);
     }
 
-    private void authenticate(String userName, String userPassword) throws Exception {
+    private void authenticate(String identifier, String userPassword) throws Exception {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userName, userPassword));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(identifier, userPassword));
         } catch (DisabledException e) {
             throw new Exception("USER DISABLED", e);
         } catch (BadCredentialsException e) {
@@ -123,4 +130,6 @@ public class JWTService {
         final String username = extractUserName(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
+
+
 }

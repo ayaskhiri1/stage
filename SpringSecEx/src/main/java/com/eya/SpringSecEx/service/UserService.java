@@ -17,51 +17,59 @@ public class UserService {
 
     @Autowired
     private UserRepo userRepo;
-
     @Autowired
     private JWTService jwtService;
-
     @Autowired
     private AuthenticationManager authManager;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /* ---------- INSCRIPTION ---------- */
     public Users register(Users user) {
+
+        // unicité username/email/phone
         if (userRepo.findByUsername(user.getUsername()) != null) {
             throw new RuntimeException("Username already exists!");
         }
+        if (userRepo.findByEmail(user.getEmail()) != null) {
+            throw new RuntimeException("Email already exists!");
+        }
+        if (userRepo.findByPhoneNumber(user.getPhoneNumber()) != null) {
+            throw new RuntimeException("Phone number already exists!");
+        }
 
-        if (user.getRoles() == null || user.getRoles().isEmpty()) {
+        // rôle par défaut
+        if (user.getRoles() == null || user.getRoles().isBlank()) {
             user.setRoles("ROLE_USER");
         }
 
+        // hachage du mot de passe
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         return userRepo.save(user);
     }
 
-
+    /* ---------- AUTHENTIFICATION ---------- */
     public String verify(Users user) {
+
         try {
             Authentication authentication = authManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
-            );
+                    new UsernamePasswordAuthenticationToken(
+                            user.getUsername(), user.getPassword()));
 
-            if (authentication.isAuthenticated()) {
-                Users foundUser = userRepo.findByUsername(user.getUsername());
-
-                if (foundUser == null) {
-                    throw new BadCredentialsException("User not found");
-                }
-
-                Map<String, Object> claims = Map.of("role", foundUser.getRoles());
-                return jwtService.generateToken(foundUser.getUsername(), claims);
-            } else {
+            if (!authentication.isAuthenticated()) {
                 throw new BadCredentialsException("Authentication failed");
             }
 
+            Users foundUser = userRepo.findByUsername(user.getUsername());
+            if (foundUser == null) {
+                throw new BadCredentialsException("User not found");
+            }
+
+            Map<String, Object> claims = Map.of("role", foundUser.getRoles());
+            return jwtService.generateToken(foundUser.getUsername(), claims);
+
         } catch (Exception e) {
-            // Important : relancer une exception pour que Spring renvoie un code 401/403
             throw new BadCredentialsException("Invalid username or password");
         }
     }

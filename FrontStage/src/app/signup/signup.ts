@@ -22,11 +22,21 @@ export class Signup {
     private router: Router
   ) {
     this.signupForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
+      username: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{8,15}$/)]],
+      dateOfBirth: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', Validators.required],
+      governorate: ['', Validators.required],
+      className: ['', Validators.required],
       roles: ['ROLE_USER', Validators.required]
+    }, {
+      validators: this.passwordMatchValidator
     });
+
   }
 
   onSubmit() {
@@ -42,4 +52,9 @@ export class Signup {
       }
     });
   }
+  passwordMatchValidator(form: FormGroup) {
+    return form.get('password')?.value === form.get('confirmPassword')?.value
+      ? null : { mismatch: true };
+  }
+
 }

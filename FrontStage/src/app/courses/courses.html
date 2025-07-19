@@ -11,7 +11,7 @@
                     <h5 class="card-title">{{ course.title }}</h5>
                     <p class="card-text text-muted flex-grow-1">{{ course.description }}</p>
                     <span class="badge bg-primary mb-2">{{ course.level }}</span>
-                    <a class="btn btn-outline-primary mt-auto w-100" href="#">
+                    <a class="btn btn-outline-primary mt-auto w-100" [routerLink]="['/courses', course.id]">
                         View Course
                     </a>
                 </div>

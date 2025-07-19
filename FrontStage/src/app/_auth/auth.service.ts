@@ -17,7 +17,7 @@ export class AuthService {
   }
 
   login(username: string, password: string): Observable<boolean> {
-    const body = { userName: username, userPassword: password }; // correspond à JwtRequest
+    const body = { identifier: username, userPassword: password };
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.http.post<any>(`${this.apiUrl}/authenticate`, body, { headers }).pipe(

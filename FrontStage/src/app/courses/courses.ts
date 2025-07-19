@@ -1,13 +1,26 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { RouterModule } from '@angular/router';
+import { CoursesService, Course } from '../_services/courses.service';
+
 @Component({
   standalone: true,
   selector: 'app-courses',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './courses.html',
   styleUrl: './courses.css'
 })
+
+export class Courses {
+  courses: Course[];
+
+  constructor(private cs: CoursesService) {
+    this.courses = cs.getAll();
+  }
+}
+
+/*
 export class Courses {
   courses = [
     {
@@ -39,3 +52,4 @@ export class Courses {
     }
   ];
 }
+*/

@@ -1,0 +1,59 @@
+<div class="container mt-5">
+  <div class="card shadow rounded-4 border-0 p-4">
+    <div class="d-flex align-items-center mb-4">
+      <div class="me-3">
+        <i class="bi bi-person-circle" style="font-size: 3rem; color: #0d6efd;"></i>
+      </div>
+      <div>
+        <h3 class="mb-0">User Profile</h3>
+        <small class="text-muted">Personal Information</small>
+      </div>
+    </div>
+
+    <div *ngIf="user">
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <strong>Username:</strong>
+          <div class="text-muted">{{ user.username }}</div>
+        </div>
+        <div class="col-md-6">
+          <strong>Email:</strong>
+          <div class="text-muted">{{ user.email }}</div>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <strong>First Name:</strong>
+          <div class="text-muted">{{ user.firstName }}</div>
+        </div>
+        <div class="col-md-6">
+          <strong>Last Name:</strong>
+          <div class="text-muted">{{ user.lastName }}</div>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <strong>Phone Number:</strong>
+          <div class="text-muted">{{ user.phoneNumber }}</div>
+        </div>
+        <div class="col-md-6">
+          <strong>Date of Birth:</strong>
+          <div class="text-muted">{{ user.dateOfBirth }}</div>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <strong>Governorate:</strong>
+          <div class="text-muted">{{ user.governorate }}</div>
+        </div>
+        <div class="col-md-6">
+          <strong>Class:</strong>
+          <div class="text-muted">{{ user.className }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

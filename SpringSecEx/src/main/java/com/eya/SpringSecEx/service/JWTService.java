@@ -72,7 +72,7 @@ public class JWTService {
         final UserDetails userDetails = loadUserByUsername(identifier);
         String newGeneratedToken = generateToken(userDetails);
 
-        Users user = userRepo.findByUsername(identifier);
+        Users user = findUser(identifier);
         return new JwtResponse(user, newGeneratedToken);
     }
 

@@ -38,4 +38,11 @@ export class Login {
       }
     });
   }
+
+  showPassword: boolean = false;
+
+togglePassword(): void {
+  this.showPassword = !this.showPassword;
+}
+
 }

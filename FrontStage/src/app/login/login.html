@@ -2,56 +2,43 @@
   <div class="card p-4 shadow-sm">
     <h3 class="mb-4 text-center">Log In</h3>
 
-    <form (ngSubmit)="onLogin()">
-      <!-- Email or phone -->
+    <form (ngSubmit)="onLogin()" autocomplete="off">
+
       <div class="mb-3">
         <label for="identifier" class="form-label">
           Email or phone number
         </label>
-        <input
-          type="text"
-          id="identifier"
-          [(ngModel)]="identifier"
-          name="identifier"
-          placeholder="Enter your email or phone number"
-          class="form-control"
-          required
-        >
+
+        <input type="text" id="identifier" [(ngModel)]="identifier" name="identifier"
+          placeholder="Enter your email or phone number" class="form-control" autocomplete="off" required>
       </div>
 
-      <!-- Password -->
-      <div class="mb-3">
+      <div class="mb-3 position-relative">
         <label for="password" class="form-label">Password</label>
-        <input
-          type="password"
-          id="password"
-          [(ngModel)]="password"
-          name="password"
-          placeholder="Enter your password"
-          class="form-control"
-          required
-        >
+        <input [type]="showPassword ? 'text' : 'password'" id="password" [(ngModel)]="password" name="password"
+          placeholder="Enter your password" class="form-control" autocomplete="off" required>
+        <i class="bi" [class.bi-eye]="!showPassword" [class.bi-eye-slash]="showPassword" (click)="togglePassword()"
+          style="position: absolute; top: 38px; right: 10px; cursor: pointer;">
+        </i>
       </div>
 
-      <!-- Forgot password -->
+
       <div class="mb-3 text-end">
         <a routerLink="/forgot-password" class="text-decoration-none">
           Forgot your password?
         </a>
       </div>
 
-      <!-- Submit -->
       <button type="submit" class="btn btn-primary w-100">
         Log In
       </button>
 
-      <!-- Sign‑up link -->
       <div class="mt-3 text-center">
         <span>Don’t have an account?</span>
         <a routerLink="/signup" class="text-decoration-none">
           Create a new account </a>
       </div>
-      
+
     </form>
   </div>
 </div>

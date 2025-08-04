@@ -22,6 +22,7 @@ export class AuthService {
 
     return this.http.post<any>(`${this.apiUrl}/authenticate`, body, { headers }).pipe(
       tap((response) => {
+        console.log("Login response:", response);
         localStorage.setItem('token', response.jwtToken);     // sauvegarde le token
         localStorage.setItem('user', JSON.stringify(response.user)); // sauvegarde les infos user
       }),
@@ -77,4 +78,15 @@ export class AuthService {
       return null;
     }
   }
+  getCurrentUser(): any {
+    const userJson = localStorage.getItem('user');
+    return userJson ? JSON.parse(userJson) : null;
+  }
+
+  isEtudiant(): boolean {
+  const role = this.getRole();
+  return typeof role === 'string' && role.includes('ROLE_ETUDIANT');
+}
+
+
 }

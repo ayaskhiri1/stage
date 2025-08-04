@@ -1,0 +1,48 @@
+h4 {
+  font-weight: 600;
+}
+
+.badge {
+  font-size: 0.9rem;
+  padding: 0.5em 0.75em;
+}
+
+.btn-outline-success {
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-outline-success:hover {
+  background-color: #198754;
+  color: #fff;
+  border-color: #198754;
+}
+
+iframe {
+  border-radius: 12px;
+}
+
+.list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+.toast-container {
+  font-size: 0.95rem;
+}
+h1 {
+  font-size: 2.2rem;
+}
+
+.toast {
+  animation: fadeInUp 0.5s ease-in-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

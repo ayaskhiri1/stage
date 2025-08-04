@@ -11,10 +11,13 @@ import { AuthService } from '../_auth/auth.service';
   styleUrls: ['./signup.css'],
   imports: [ReactiveFormsModule, RouterModule, CommonModule]
 })
+
 export class Signup {
   signupForm: FormGroup;
   errorMessage: string = '';
   successMessage: string = '';
+  showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -36,7 +39,14 @@ export class Signup {
     }, {
       validators: this.passwordMatchValidator
     });
+  }
 
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  toggleConfirmPasswordVisibility() {
+    this.showConfirmPassword = !this.showConfirmPassword;
   }
 
   onSubmit() {
@@ -52,9 +62,10 @@ export class Signup {
       }
     });
   }
+
   passwordMatchValidator(form: FormGroup) {
     return form.get('password')?.value === form.get('confirmPassword')?.value
       ? null : { mismatch: true };
   }
-
 }
+

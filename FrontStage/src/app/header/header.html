@@ -20,6 +20,10 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/contact" routerLinkActive="active">Contact</a>
         </li>
+
+        <li class="nav-item" *ngIf="isLoggedIn()">
+          <a class="nav-link" [routerLink]="isAdmin() ? '/admin' : '/user'" routerLinkActive="active">Dashboard</a>
+        </li>
       </ul>
 
       <ul class="navbar-nav ms-auto">
@@ -28,6 +32,9 @@
         </li>
         <li class="nav-item" *ngIf="!isLoggedIn()">
           <a class="btn btn-success me-2 custom-btn" routerLink="/login">Login</a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn()">
+          <a class="btn btn-outline-light me-2 custom-btn" routerLink="/profile">View Profile</a>
         </li>
         <li class="nav-item" *ngIf="isLoggedIn()">
           <button class="btn btn-danger custom-btn" (click)="logout()">Logout</button>

@@ -1,15 +1,18 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'app-home',
-  imports: [],
+  imports: [CommonModule, RouterModule],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
 export class Home {
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
    ngAfterViewInit() {
     this.route.fragment.subscribe(fragment => {
@@ -21,5 +24,9 @@ export class Home {
       }
     });
   }
+   navigateTo(path: string) {
+    this.router.navigate([path]);
+  }
+
 
 }

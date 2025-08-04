@@ -2,6 +2,7 @@ package com.eya.SpringSecEx.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
@@ -40,6 +41,14 @@ public class Users {
 
     @Column(nullable = false)
     private String className;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 
     public Users() { }
 
@@ -98,6 +107,10 @@ public class Users {
 
     public String getClassName()                 { return className; }
     public void setClassName(String className)   { this.className = className; }
+
+    public LocalDateTime getCreatedAt()           { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
 
     @Override
     public String toString() {

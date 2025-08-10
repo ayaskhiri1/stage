@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CoursesService, Course } from '../_services/courses.service';
 
+import { AuthService } from '../_auth/auth.service';
+
 @Component({
   standalone: true,
   selector: 'app-courses',
@@ -15,41 +17,8 @@ import { CoursesService, Course } from '../_services/courses.service';
 export class Courses {
   courses: Course[];
 
-  constructor(private cs: CoursesService) {
+  constructor(private cs: CoursesService, public auth: AuthService) {
     this.courses = cs.getAll();
   }
 }
 
-/*
-export class Courses {
-  courses = [
-    {
-      id: 1,
-      title: 'Angular Fundamentals',
-      description: 'Learn the core concepts of Angular and build dynamic web apps.',
-      category: 'Web Development',
-      level: 'Beginner',
-      image: 'images/angular.jpg',
-      price: 0
-    },
-    {
-      id: 2,
-      title: 'Python for Data Science',
-      description: 'Explore data analysis, visualization and machine learning with Python.',
-      category: 'Data Science',
-      level: 'Intermediate',
-      image: 'images/python.jpg',
-      price: 0
-    },
-    {
-      id: 3,
-      title: 'Cybersecurity Essentials',
-      description: 'Understand threats, vulnerabilities and best practices to secure systems.',
-      category: 'Security',
-      level: 'Advanced',
-      image: 'images/cyber.jpg',
-      price: 0
-    }
-  ];
-}
-*/

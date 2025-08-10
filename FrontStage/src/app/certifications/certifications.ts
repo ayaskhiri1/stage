@@ -11,11 +11,10 @@ import { RouterModule, Router } from '@angular/router';
 })
 export class Certifications implements OnInit {
   certifications = [
-  { title: 'Web Development Certificate', duration: '40h course' },
-  { title: 'Cybersecurity Basics Certificate', duration: '25h course' },
-  { title: 'AI & Machine Learning Specialist', duration: '60h course' }
-];
-
+    { title: 'Web Development Certificate', duration: '40h course' },
+    { title: 'Cybersecurity Basics Certificate', duration: '25h course' },
+    { title: 'AI & Machine Learning Specialist', duration: '60h course' }
+  ];
 
   enrolledCertifications: string[] = [];
   showToast = false;
@@ -44,24 +43,8 @@ export class Certifications implements OnInit {
     return;
   }
 
-  const user = JSON.parse(userJson);
-  user.certifications = [...(user.certifications || [])];
-
-  const alreadyEnrolled = user.certifications.some((c: any) => c.title === title);
-
-  if (alreadyEnrolled) {
-    this.showToastMessage("You are already enrolled in this certification.");
-  } else {
-    const cert = this.certifications.find(c => c.title === title);
-    if (cert) {
-      user.certifications.push(cert);
-      localStorage.setItem('user', JSON.stringify(user));
-      this.enrolledCertifications.push(title);
-      this.showToastMessage(`Successfully enrolled in "${title}".`);
-    }
-  }
+  this.router.navigate(['/checkout-certification', title]);
 }
-
 
   showToastMessage(message: string): void {
     this.toastMessage = message;

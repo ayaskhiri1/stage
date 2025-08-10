@@ -1,0 +1,45 @@
+<div class="container py-5" *ngIf="course">
+  <div class="row justify-content-center">
+    <!-- Colonne gauche : résumé du cours -->
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+        <img [src]="course.image" [alt]="course.title" class="img-fluid">
+        <div class="card-body">
+          <h3 class="fw-semibold">{{ course.title }}</h3>
+          <p class="text-muted">{{ course.description }}</p>
+          <span class="badge bg-primary me-2">{{ course.level }}</span>
+          <span class="badge bg-secondary">{{ course.category }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colonne droite : paiement -->
+    <div class="col-md-5">
+      <div class="card shadow-lg border-0 p-4 rounded-4">
+        <h4 class="fw-bold mb-3">Order Summary</h4>
+        <div class="d-flex justify-content-between">
+          <span>{{ course.title }}</span>
+          <strong>${{ price }}</strong>
+        </div>
+        <hr>
+        <p class="small text-muted mb-3">
+          By purchasing this course, you’ll get:
+        </p>
+        <ul class="small text-muted">
+          <li>✅ Lifetime access to all lessons</li>
+          <li>✅ Downloadable resources</li>
+          <li>✅ Certificate of completion</li>
+          <li>✅ 30-day money-back guarantee</li>
+        </ul>
+
+        <button class="btn btn-success btn-lg" (click)="processPayment()" [disabled]="alreadyEnrolled">
+          {{ alreadyEnrolled ? 'Already Enrolled' : '💳 Pay & Access Course' }}
+        </button>
+        
+        <button class="btn btn-outline-secondary w-100" (click)="cancel()">
+          ❌ Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

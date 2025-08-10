@@ -1,17 +1,212 @@
-<div class="container mt-5">
-  <div class="card text-center border-success shadow-lg">
-    <div class="card-header bg-success text-white">
-      <h2>Admin Dashboard</h2>
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - E-Learning</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .sidebar {
+      min-height: 100vh;
+      background-color: #212529;
+      color: white;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      padding: 12px 20px;
+    }
+
+    .sidebar a:hover {
+      background-color: #343a40;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="d-flex">
+
+    <div class="sidebar p-3">
+      <h4 class="text-center mb-4">Admin Panel</h4>
+      <a href="/admin"><i class="bi bi-speedometer2"></i> Dashboard</a>
+      <a href="/courses"><i class="bi bi-journal-text"></i> Manage Courses</a>
+      <a href="/users"><i class="bi bi-journal-text"></i> Manage Users</a>
+
+      <a href="/certifications"><i class="bi bi-award"></i> Certifications</a>
+      <a href="/contact"><i class="bi bi-chat-left-text"></i> Support</a>
+      <a href="/profile"><i class="bi bi-gear"></i> Settings</a>
+      <a href="#" (click)="logout()" class="text-danger">
+        <i class="bi bi-box-arrow-right"></i> Logout
+      </a>
     </div>
-    <div class="card-body">
-      <p class="card-text">Welcome to the administration panel</p>
-      <div class="mt-4">
-        <button class="btn btn-outline-success me-2">Manage Users</button>
-        <button class="btn btn-outline-primary">System Settings</button>
+
+    <div class="container-fluid p-4">
+      <h1 class="mb-4">Dashboard</h1>
+
+      <div class="row g-3 mb-4">
+        <div class="col-md-3">
+          <div class="card shadow-sm border-primary">
+            <div class="card-body">
+              <h5 class="card-title">Users</h5>
+              <h3 class="text-primary">540</h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card shadow-sm border-success">
+            <div class="card-body">
+              <h5 class="card-title">Courses</h5>
+              <h3 class="text-success">120</h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card shadow-sm border-warning">
+            <div class="card-body">
+              <h5 class="card-title">Certifications</h5>
+              <h3 class="text-warning">85</h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card shadow-sm border-danger">
+            <div class="card-body">
+              <h5 class="card-title">Completion Rate</h5>
+              <h3 class="text-danger">67%</h3>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="card-footer text-muted">
-      Last login: Today at {{ currentTime }}
+
+      <!-- Charts -->
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Monthly Registrations</h5>
+              <canvas id="chartRegistrations"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Courses Distribution</h5>
+              <canvas id="chartCourses"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Management -->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Recent Users</h5>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Ali Ben</td>
+                    <td>ali&#64;example.com</td>
+                    <td>Student</td>
+                  </tr>
+                  <tr>
+                    <td>Sara K.</td>
+                    <td>sara&#64;example.com</td>
+                    <td>Instructor</td>
+                  </tr>
+                  <tr>
+                    <td>Admin</td>
+                    <td>admin&#64;example.com</td>
+                    <td>Admin</td>
+                  </tr>
+                </tbody>
+              </table>
+              <a href="/users" class="btn btn-primary btn-sm">View all</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Recent Courses</h5>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Instructor</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>HTML & CSS</td>
+                    <td>Sami T.</td>
+                    <td><span class="badge bg-success">Published</span></td>
+                  </tr>
+                  <tr>
+                    <td>Python Basics</td>
+                    <td>Leila M.</td>
+                    <td><span class="badge bg-warning">Draft</span></td>
+                  </tr>
+                </tbody>
+              </table>
+              <a href="/courses" class="btn btn-primary btn-sm">View all</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
-</div>
+
+  <script>
+    // Registrations Chart
+    new Chart(document.getElementById("chartRegistrations"), {
+      type: "line",
+      data: {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+        datasets: [{
+          label: "Registrations",
+          data: [30, 45, 50, 40, 60, 70, 90],
+          borderColor: "#0d6efd",
+          fill: false,
+          tension: 0.3
+        }]
+      }
+    });
+
+    // Courses Distribution Chart
+    new Chart(document.getElementById("chartCourses"), {
+      type: "pie",
+      data: {
+        labels: ["Web Dev", "Data Science", "Design", "Marketing"],
+        datasets: [{
+          data: [40, 25, 20, 15],
+          backgroundColor: ["#0d6efd", "#198754", "#ffc107", "#dc3545"]
+        }]
+      }
+    });
+  </script>
+
+</body>
+
+</html>

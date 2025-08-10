@@ -1,0 +1,15 @@
+<div class="container py-5" *ngIf="certification"> 
+  <h2 class="mb-4">Checkout - {{ certification.title }}</h2>
+
+  <p class="lead">
+    You are about to enroll in the certification "<strong>{{ certification.title }}</strong>".
+  </p>
+
+  <p><strong>Duration:</strong> {{ certification.duration }}</p>
+
+  <p><strong>Price:</strong> $19.99</p>
+
+  <button class="btn btn-success btn-lg" (click)="processPayment()">
+    Pay and Enroll
+  </button>
+</div>

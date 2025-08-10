@@ -1,0 +1,30 @@
+<div class="container mt-5">
+  <h2 class="mb-4">Gestion des étudiants</h2>
+
+  <div *ngIf="loading" class="text-center">
+    <p>Chargement...</p>
+  </div>
+
+  <table *ngIf="!loading && students.length > 0" class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Prénom</th>
+        <th>Nom</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of students">
+        <td>{{ student.id }}</td>
+        <td>{{ student.firstname }}</td>
+        <td>{{ student.lastname }}</td>
+        <td>{{ student.email }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && students.length === 0" class="alert alert-warning">
+    Aucun étudiant trouvé.
+  </div>
+</div>

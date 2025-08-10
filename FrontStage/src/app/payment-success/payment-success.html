@@ -1,0 +1,11 @@
+@if (loading) {
+  <p>🔄 Vérification du paiement...</p>
+}
+@else if (!loading && paymentInfo) {
+  <h2>✅ Paiement réussi !</h2>
+  <p><strong>ID de session :</strong> {{ paymentInfo.id }}</p>
+  <p><strong>Status :</strong> {{ paymentInfo.paymentStatus }}</p>
+  <p><strong>Email client :</strong> {{ paymentInfo.customerEmail }}</p>
+  <p><strong>Certification :</strong> {{ paymentInfo.clientReferenceId }}</p>
+  <button routerLink="/" class="btn btn-primary">Retour à l’accueil</button>
+}

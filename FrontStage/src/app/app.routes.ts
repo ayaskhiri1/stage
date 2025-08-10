@@ -5,6 +5,8 @@ import { Admin } from './admin/admin';
 import { User } from './user/user';
 import { Courses } from './courses/courses';
 
+import { Users } from './users/users';
+
 import { Contact } from './contact/contact';
 import { Forbidden } from './forbidden/forbidden';
 import { About } from './about/about';
@@ -19,11 +21,18 @@ import { Profile } from './profile/profile';
 
 import { ForgotPassword } from './forgot.password/forgot.password';
 
+import { Checkout } from './checkout/checkout';
+import { CheckoutCertif } from './checkout-certif/checkout-certif';
+
+import { PaymentSuccess } from './payment-success/payment-success';
 
 export const routes: Routes = [
   { path: 'home', component: Home },
   { path: 'admin', component: Admin, canActivate: [adminGuard] },
   { path: 'user', component: User, canActivate: [authGuard] },
+  
+  { path: 'users', component: Users, canActivate: [authGuard] },
+
   {
     path: 'signup',
     canActivate: [GuestGuard],
@@ -59,7 +68,15 @@ export const routes: Routes = [
   { path: 'profile', component: Profile },
   { path: 'forgot-password', component: ForgotPassword },
 
+  { path: 'checkout/:id', component: Checkout },
 
+  {
+    path: 'checkout-certification/:title',
+    component: CheckoutCertif
+  },
+
+  { path: 'payment-success', component: PaymentSuccess },
+  
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home' }  // optionnel : route 404
 ];

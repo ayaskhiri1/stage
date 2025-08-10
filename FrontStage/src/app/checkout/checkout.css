@@ -1,0 +1,22 @@
+.card {
+  max-width: 800px;
+  margin: auto;
+  border-radius: 1rem;
+}
+img {
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.card img {
+  height: 250px;
+  object-fit: cover;
+}
+
+ul {
+  padding-left: 1.2rem;
+}
+
+ul li {
+  margin-bottom: 0.3rem;
+}
